@@ -1,47 +1,51 @@
-'use client'
+"use client";
 
-import { Users } from 'lucide-react'
+import { Users } from "lucide-react";
 
 export function Team() {
   const teamMembers = [
-        {
-      name: 'Shaik Shakeel',
-      occupation: 'Founder and CEO',
-      area: 'Hyderabad, Telangana',
-      description: 'Providing investment advice and portfolio management',
+    {
+      name: "Shaik Shakeel",
+      occupation: "Founder and CEO",
+      area: "Hyderabad, Telangana",
+      description: "Providing investment advice and portfolio management.",
     },
     {
-      name: 'Shaik Israr Ahmed',
-      occupation: 'Co-Founder',
-      area: 'Hyderabad, Telangana',
-      description: 'Leading the organization with 7+ years of real estate expertise',
+      name: "Shaik Israr Ahmed",
+      occupation: "Co-Founder",
+      area: "Hyderabad, Telangana",
+      description:
+        "Leading the organization with 7+ years of real estate expertise.",
     },
-    // {
-    //   name: 'Priya Sharma',
-    //   occupation: 'Senior Legal Advisor',
-    //   area: 'Hyderabad, Telangana',
-    //   description: 'Specializing in property documentation and legal compliance',
-    // },
     {
-      name: 'Mohammad Faizan',
-      occupation: 'Sales Director',
-      area: 'Sangareddy, Telangana',
-      description: 'Managing sales operations across Telangana and Karnataka region',
+      name: "Mohammad Faizan",
+      occupation: "Sales Director - Narayankhed",
+      area: "Sangareddy, Telangana",
+      description:
+        "Managing sales operations in Narayankhed and ensuring client satisfaction.",
     },
-    // {
-    //   name: 'Meera Desai',
-    //   occupation: 'Property Manager',
-    //   area: 'Bidar, Karnataka',
-    //   description: 'Overseeing property inventory and client relations',
-    // },
-    // {
-    //   name: 'Arjun Singh',
-    //   occupation: 'Site Coordinator',
-    //   area: 'Vikarabad, Telangana',
-    //   description: 'Conducting site visits and property assessments',
-    // },
-
-  ]
+    {
+      name: "Mohammad Junaid Ahmed",
+      occupation: "Sales Director - Zaheerabad",
+      area: "Zaheerabad, Telangana",
+      description:
+        "Leading sales operations and assisting clients with real estate investments in the Zaheerabad region.",
+    },
+    {
+      name: "Mohammad Akheel",
+      occupation: "Sales Director - Sangareddy",
+      area: "Sangareddy, Telangana",
+      description:
+        "Overseeing property sales and delivering personalized real estate solutions in Sangareddy.",
+    },
+    {
+      name: "Mohammad Ajaz Momin",
+      occupation: "Sales Director - Basavakalyan",
+      area: "Basavakalyan, Karnataka",
+      description:
+        "Managing sales and client relationships across the Basavakalyan region.",
+    },
+  ];
 
   return (
     <section className="py-16 md:py-24 bg-secondary/30">
@@ -55,7 +59,8 @@ export function Team() {
             Our Expert Team
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Meet the dedicated professionals serving Shaiks Real Estate across Telangana and Karnataka
+            Meet the dedicated professionals serving Shaiks Real Estate across
+            Telangana and Karnataka
           </p>
         </div>
 
@@ -74,13 +79,19 @@ export function Team() {
               <h3 className="text-xl font-bold text-foreground dark:text-white mb-1">
                 {member.name}
               </h3>
-              <p className="text-primary font-semibold mb-2">{member.occupation}</p>
-              <p className="text-sm text-muted-foreground dark:text-gray-400 mb-3">{member.area}</p>
-              <p className="text-sm text-foreground/75 dark:text-gray-300">{member.description}</p>
+              <p className="text-primary font-semibold mb-2">
+                {member.occupation}
+              </p>
+              <p className="text-sm text-muted-foreground dark:text-gray-400 mb-3">
+                {member.area}
+              </p>
+              {/* <p className="text-sm text-foreground/75 dark:text-gray-300">
+                {member.description}
+              </p> */}
             </div>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

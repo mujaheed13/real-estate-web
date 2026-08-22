@@ -1,47 +1,34 @@
-'use client'
+"use client";
 
-import { Briefcase, MapPin } from 'lucide-react'
+import { Briefcase, MapPin } from "lucide-react";
 
 export function LegalAdvocates() {
   const advocates = [
     {
-      name: 'Adv. M. Krishna Reddy',
-      location: 'Hyderabad, Telangana',
-      specialization: 'Residential & Commercial Properties',
-      experience: '15+ years',
+      name: "P. Venkat Ram Reddy",
+      location: "Zaheerabad, Telangana",
+      education: "B.Sc., LL.B.",
+      experience: "30+ years",
     },
     {
-      name: 'Adv. Priya Verma',
-      location: 'Sangareddy, Telangana',
-      specialization: 'Title & Documentation',
-      experience: '12+ years',
+      name: "D. Chandrashekar Rao",
+      location: "Narayankhed, Telangana",
+      education: "B.Sc., LL.B.",
+      experience: "30+ years",
     },
     {
-      name: 'Adv. Rajesh Sharma',
-      location: 'Vikarabad, Telangana',
-      specialization: 'Agricultural & Land Laws',
-      experience: '14+ years',
+      name: "Susheel D. Avasti",
+      location: "Basavakalyan, Karnataka",
+      education: "B.Sc., LL.B.",
+      experience: "15+ years",
     },
     {
-      name: 'Adv. Vikram Patel',
-      location: 'Bidar, Karnataka',
-      specialization: 'Registry & Legal Compliance',
-      experience: '13+ years',
+      name: "P. Sudhakar",
+      location: "Narayankhed, Telangana",
+      education: "B.Sc., LL.B.",
+      experience: "10+ years",
     },
-    {
-      name: 'Adv. Anusha Gupta',
-      location: 'Gulbarga, Karnataka',
-      specialization: 'Property Rights & Disputes',
-      experience: '11+ years',
-    },
-    {
-      name: 'Adv. Deepak Nair',
-      location: 'Medak, Telangana',
-      specialization: 'Land Records & Government Approvals',
-      experience: '16+ years',
-    },
-  ]
-
+  ];
   return (
     <section className="py-16 md:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,7 +41,8 @@ export function LegalAdvocates() {
             Our Legal Advocates Network
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Expert legal professionals ensuring safe and transparent transactions across all our service areas
+            Expert legal professionals ensuring safe and transparent
+            transactions across all our service areas
           </p>
         </div>
 
@@ -70,7 +58,7 @@ export function LegalAdvocates() {
                   {advocate.name}
                 </h3>
                 <p className="text-sm text-primary font-semibold">
-                  {advocate.specialization}
+                  {advocate.education}
                 </p>
               </div>
 
@@ -95,10 +83,11 @@ export function LegalAdvocates() {
             All Advocates are Certified by Bar Council of India
           </p>
           <p className="text-muted-foreground">
-            We maintain partnerships with the most reputable legal professionals in Telangana and Karnataka
+            We maintain partnerships with the most reputable legal professionals
+            in Telangana and Karnataka
           </p>
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,65 +1,70 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
+import { useState } from "react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 const testimonials = [
   {
-    name: 'Rajesh Kumar',
-    title: 'Business Owner',
+    name: "Imran Khan",
     rating: 5,
-    text: 'Found my dream villa through Shaiks Real Estate. Their professionalism and transparency throughout the process made it hassle-free.',
-    image: '/api/placeholder/80/80',
+    text: "Israr and team are very professional and have in-depth knowledge of the complete process. We purchased 1 acre of agricultural land in Karamungi through them and received amazing support throughout the journey. Even when land loan issues came up, they handled everything smoothly and professionally without bothering us at all. Their dedication, transparency, and teamwork made the entire process stress-free. I highly recommend them and wish them continued success.",
+    image: "/api/placeholder/80/80",
   },
   {
-    name: 'Priya Sharma',
-    title: 'Investment Professional',
+    name: "Gnanender Kumar",
     rating: 5,
-    text: 'Excellent guidance on property investment. Their team provided detailed market analysis and helped me make informed decisions.',
-    image: '/api/placeholder/80/80',
+    text: "I purchased 1.5 acres of agricultural land through Shaiks Real Estate about 6 months ago. Their service is excellent, and they deal only in verified properties. Thank you, Shaiks Real Estate!",
+    image: "/api/placeholder/80/80",
   },
   {
-    name: 'Amit Patel',
-    title: 'Entrepreneur',
+    name: "Mohammed Nooruddin",
     rating: 5,
-    text: 'Outstanding service! They understood my requirements perfectly and presented options that exceeded expectations.',
-    image: '/api/placeholder/80/80',
+    text: "I purchased land in Narayankhed with the help of Shaiks Real Estate. The entire process was smooth and transparent. I highly recommend them to anyone looking to purchase land.",
+    image: "/api/placeholder/80/80",
   },
   {
-    name: 'Deepika Singh',
-    title: 'Corporate Executive',
+    name: "Titus Mary Richard",
     rating: 5,
-    text: 'The documentation process was smooth and transparent. Highly recommend for anyone serious about real estate investment.',
-    image: '/api/placeholder/80/80',
+    text: "Shaiks Real Estate is a genuine real estate company. They did a great job helping me purchase farmland. Thank you!",
+    image: "/api/placeholder/80/80",
   },
   {
-    name: 'Vikram Reddy',
-    title: 'Developer',
+    name: "Sohail Tanveer",
     rating: 5,
-    text: 'Working with Shaiks Real Estate as a business partner has been great. Professional, reliable, and results-driven.',
-    image: '/api/placeholder/80/80',
+    text: "Assalamu Alaikum. We purchased 3 acres of land in Nagalgidda, Narayankhed through Shaik Real Estate about 6 months ago. Last month we drilled a borewell, and Alhamdulillah, we found water. Their team thoroughly verified all papers and documents, making the deal transparent and genuine. Keep growing, Ahmed!",
+    image: "/api/placeholder/80/80",
   },
-]
+];
 
 export function Testimonials() {
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const goToPrevious = () => {
-    setCurrentSlide((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))
-  }
+    setCurrentSlide((prev) =>
+      prev === 0 ? testimonials.length - 1 : prev - 1,
+    );
+  };
 
   const goToNext = () => {
-    setCurrentSlide((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))
-  }
+    setCurrentSlide((prev) =>
+      prev === testimonials.length - 1 ? 0 : prev + 1,
+    );
+  };
 
   return (
-    <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-secondary/10 dark:bg-slate-900/10">
+    <section
+      id="testimonials"
+      className="py-20 px-4 sm:px-6 lg:px-8 bg-secondary/10 dark:bg-slate-900/10"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">Client Testimonials</h2>
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-foreground">
+            Client Testimonials
+          </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Hear from our satisfied clients who have found their perfect properties
+            Hear from our satisfied clients who have found their perfect
+            properties
           </p>
         </div>
 
@@ -80,7 +85,11 @@ export function Testimonials() {
                       {/* Rating */}
                       <div className="flex justify-center gap-1 mb-6">
                         {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} size={20} className="fill-primary text-primary" />
+                          <Star
+                            key={i}
+                            size={20}
+                            className="fill-primary text-primary"
+                          />
                         ))}
                       </div>
 
@@ -94,8 +103,12 @@ export function Testimonials() {
                         <div className="w-16 h-16 rounded-full mx-auto mb-4 bg-primary/10 flex items-center justify-center text-2xl font-bold text-primary">
                           {testimonial.name.charAt(0)}
                         </div>
-                        <h4 className="font-bold text-lg text-foreground">{testimonial.name}</h4>
-                        <p className="text-foreground/60">{testimonial.title}</p>
+                        <h4 className="font-bold text-lg text-foreground">
+                          {testimonial.name}
+                        </h4>
+                        {/* <p className="text-foreground/60">
+                          {testimonial.title}
+                        </p> */}
                       </div>
                     </div>
                   </div>
@@ -128,7 +141,7 @@ export function Testimonials() {
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
                 className={`w-3 h-3 rounded-full transition-all ${
-                  idx === currentSlide ? 'bg-primary w-8' : 'bg-muted'
+                  idx === currentSlide ? "bg-primary w-8" : "bg-muted"
                 }`}
                 aria-label={`Go to testimonial ${idx + 1}`}
               />
@@ -137,5 +150,5 @@ export function Testimonials() {
         </div>
       </div>
     </section>
-  )
+  );
 }

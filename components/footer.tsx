@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { Mail, Phone, MapPin, Share2, Heart, PlayCircle } from 'lucide-react'
+import Link from "next/link";
+import { Mail, Phone, MapPin, Share2, Heart, PlayCircle } from "lucide-react";
 
 export function Footer() {
   return (
@@ -15,7 +15,8 @@ export function Footer() {
               <span className="font-bold text-lg">Shaiks Real Estate</span>
             </div>
             <p className="text-gray-400 mb-4">
-              India&apos;s most trusted real estate partner, dedicated to helping you find your dream property.
+              India&apos;s most trusted real estate partner, dedicated to
+              helping you find your dream property.
             </p>
           </div>
 
@@ -24,22 +25,34 @@ export function Footer() {
             <h4 className="font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#home" className="text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href="#home"
+                  className="text-gray-400 hover:text-accent transition-colors"
+                >
                   Home
                 </a>
               </li>
               <li>
-                <a href="#about" className="text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href="#about"
+                  className="text-gray-400 hover:text-accent transition-colors"
+                >
                   About
                 </a>
               </li>
               <li>
-                <a href="#properties" className="text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href="#properties"
+                  className="text-gray-400 hover:text-accent transition-colors"
+                >
                   Properties
                 </a>
               </li>
               <li>
-                <a href="#contact" className="text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href="#contact"
+                  className="text-gray-400 hover:text-accent transition-colors"
+                >
                   Contact
                 </a>
               </li>
@@ -51,22 +64,34 @@ export function Footer() {
             <h4 className="font-bold mb-4">Services</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-accent transition-colors"
+                >
                   Buy Property
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-accent transition-colors"
+                >
                   Sell Property
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-accent transition-colors"
+                >
                   Investment Guide
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-accent transition-colors">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-accent transition-colors"
+                >
                   Legal Support
                 </a>
               </li>
@@ -83,11 +108,17 @@ export function Footer() {
               </div>
               <div className="flex items-start gap-2">
                 <Mail size={18} className="text-accent mt-1 flex-shrink-0" />
-                <span className="text-gray-400">shaiksrealestate@gmail.com</span>
+                <span className="text-gray-400">
+                  shaiksrealestate@gmail.com
+                </span>
               </div>
               <div className="flex items-start gap-2">
                 <MapPin size={18} className="text-accent mt-1 flex-shrink-0" />
-                <span className="text-gray-400">Vehkateshwar Theatre Road<br />Narayankhed, Sangareddy Dist.</span>
+                <span className="text-gray-400">
+                  Vehkateshwar Theatre Road
+                  <br />
+                  Narayankhed, Sangareddy Dist.
+                </span>
               </div>
             </div>
           </div>
@@ -133,5 +164,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
