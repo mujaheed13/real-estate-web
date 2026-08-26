@@ -1,19 +1,33 @@
 'use server'
 
 import { auth } from '@/lib/auth'
-import { drizzle } from 'drizzle-orm/node-postgres'
-import { Pool } from 'pg'
+import { db } from '@/lib/db'
 import { property } from '@/lib/db/schema'
-import * as schema from '@/lib/db/schema'
 import { and, desc, eq } from 'drizzle-orm'
 import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 
 function getDb() {
-  const url = process.env.DATABASE_URL
-  if (!url) throw new Error('DATABASE_URL is required')
-  const pool = new Pool({ connectionString: url })
-  return drizzle(pool, { schema })
+  if (!db) throw new Error('DATABASE_URL is required')
+  return db
+}
+
+const PROPERTY_STATUSES = ['available', 'sold', 'rented', 'under-construction'] as const
+
+function normalizeProperty(data: PropertyInput) {
+  const name = data.name.trim()
+  const location = data.location.trim()
+  const size = data.size.trim()
+  const type = data.type.trim()
+  const price = Number(data.price)
+  const status = data.status || 'available'
+
+  if (!name || !location || !size || !type) throw new Error('Please complete all required fields')
+  if (!Number.isSafeInteger(price) || price <= 0) throw new Error('Price must be a positive whole number')
+  if (!PROPERTY_STATUSES.includes(status as (typeof PROPERTY_STATUSES)[number])) throw new Error('Invalid property status')
+  if (data.imageUrl && !data.imageUrl.startsWith('https://')) throw new Error('Image URL must use HTTPS')
+
+  return { name, location, size, type, price, status, description: data.description?.trim() || null, imageUrl: data.imageUrl?.trim() || null }
 }
 
 async function getUserId() {
@@ -56,15 +70,12 @@ export interface PropertyInput {
 
 export async function createProperty(data: PropertyInput) {
   const userId = await getUserId()
-  const db = getDb()
+  const database = getDb()
+  const values = normalizeProperty(data)
 
-  const result = await db
+  const result = await database
     .insert(property)
-    .values({
-      ...data,
-      userId,
-      status: data.status || 'available',
-    })
+    .values({ ...values, userId })
     .returning()
 
   revalidatePath('/admin/properties')
@@ -74,14 +85,12 @@ export async function createProperty(data: PropertyInput) {
 
 export async function updateProperty(id: number, data: PropertyInput) {
   const userId = await getUserId()
-  const db = getDb()
+  const database = getDb()
+  const values = normalizeProperty(data)
 
-  await db
+  await database
     .update(property)
-    .set({
-      ...data,
-      updatedAt: new Date(),
-    })
+    .set({ ...values, updatedAt: new Date() })
     .where(and(eq(property.id, id), eq(property.userId, userId)))
 
   revalidatePath('/admin/properties')
@@ -102,7 +111,9 @@ export async function deleteProperty(id: number) {
 }
 
 export async function getAllPublicProperties() {
-  const db = getDb()
-  const properties = await db.select().from(property).orderBy(desc(property.createdAt))
-  return properties
+  const database = getDb()
+  return database
+    .select()
+    .from(property)
+    .orderBy(desc(property.createdAt))
 }
