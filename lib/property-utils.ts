@@ -1,5 +1,26 @@
+function normalizeImageUrl(value: string) {
+  const url = value.trim()
+  if (!url.startsWith('https://')) return null
+
+  try {
+    const parsed = new URL(url)
+    const fileId = parsed.pathname.match(/\/file\/d\/([^/]+)/)?.[1] ?? parsed.searchParams.get('id')
+
+    if (parsed.hostname === 'drive.google.com' && fileId) {
+      return `https://drive.google.com/uc?export=view&id=${encodeURIComponent(fileId)}`
+    }
+  } catch {
+    return null
+  }
+
+  return url
+}
+
 export function getPropertyImages(imageUrl?: string | null) {
-  return (imageUrl ?? '').split(/[\n,]+/).map((url) => url.trim()).filter((url) => url.startsWith('https://'))
+  return (imageUrl ?? '')
+    .split(/[\n,]+/)
+    .map(normalizeImageUrl)
+    .filter((url): url is string => Boolean(url))
 }
 
 export function formatIndianPrice(value: number) {
