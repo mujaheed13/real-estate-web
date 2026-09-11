@@ -14,6 +14,7 @@ function getDb() {
 
 const PROPERTY_STATUSES = ['available', 'sold', 'rented', 'under-construction'] as const
 
+
 function normalizeProperty(data: PropertyInput) {
   const name = data.name.trim()
   const location = data.location.trim()

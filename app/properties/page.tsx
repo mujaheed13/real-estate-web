@@ -1,4 +1,5 @@
 import { getAllPublicProperties } from '@/app/actions/properties'
+import { getPropertyImages } from '@/lib/property-utils'
 import { MapPin, Home, Ruler, IndianRupee } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -39,10 +40,10 @@ export default async function PropertiesPage() {
             {properties.map((property) => (
               <div key={property.id} className="card-luxury border border-border overflow-hidden hover:shadow-2xl transition-all">
                 {/* Image */}
-                {property.imageUrl && (
+                {getPropertyImages(property.imageUrl).length > 0 && (
                   <div className="relative h-48 bg-muted overflow-hidden">
                     <Image
-                      src={property.imageUrl}
+                      src={getPropertyImages(property.imageUrl)[0]}
                       alt={property.name}
                       fill
                       className="object-cover hover:scale-105 transition-transform duration-300"
@@ -103,9 +104,9 @@ export default async function PropertiesPage() {
                   )}
 
                   {/* Button */}
-                  <button className="w-full button-primary bg-primary text-primary-foreground hover:shadow-lg">
+                  <Link href={`/properties/${property.id}`} className="block w-full button-primary bg-primary text-center text-primary-foreground hover:shadow-lg">
                     View Details
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
