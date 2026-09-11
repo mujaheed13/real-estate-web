@@ -1,5 +1,5 @@
 import { getAllPublicProperties } from '@/app/actions/properties'
-import { getPropertyImages } from '@/lib/property-utils'
+import { formatIndianPrice, getPropertyImages } from '@/lib/property-utils'
 import { MapPin, Home, Ruler, IndianRupee } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -79,7 +79,7 @@ export default async function PropertiesPage() {
                     <div className="flex items-center gap-2">
                       <IndianRupee size={20} className="text-primary" />
                       <span className="text-2xl font-bold text-primary">
-                        {(property.price / 10000000).toFixed(2)} Cr
+                        {formatIndianPrice(property.price)}
                       </span>
                     </div>
                   </div>
