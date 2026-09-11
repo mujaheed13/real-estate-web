@@ -1,5 +1,6 @@
 import { auth } from '@/lib/auth'
-import { redirect, headers } from 'next/navigation'
+import { redirect } from 'next/navigation'
+import { headers } from 'next/headers'
 import { getProperties } from '@/app/actions/properties'
 import { PropertyForm } from '@/components/admin/property-form'
 import { PropertiesTable } from '@/components/admin/properties-table'
