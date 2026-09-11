@@ -51,6 +51,7 @@ export const verification = pgTable('verification', {
 // App Tables
 export const property = pgTable('property', {
   id: serial('id').primaryKey(),
+  code: text('code'),
   name: text('name').notNull(),
   location: text('location').notNull(),
   price: bigint('price', { mode: 'number' }).notNull(),

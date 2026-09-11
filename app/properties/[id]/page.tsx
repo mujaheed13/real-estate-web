@@ -1,7 +1,7 @@
 import { getAllPublicProperties } from '@/app/actions/properties'
-import { getPropertyImages } from '@/lib/property-utils'
-import { ArrowLeft, Home, IndianRupee, MapPin, Ruler } from 'lucide-react'
-import Image from 'next/image'
+import { formatIndianPrice, getPropertyImages } from '@/lib/property-utils'
+import { PropertyCarousel } from '@/components/property-carousel'
+import { ArrowLeft, Home, MapPin, MessageCircle, Ruler } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -23,15 +23,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
           <ArrowLeft data-icon="inline-start" /> Back to Properties
         </Link>
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
-          {primaryImage && (
-            <div className="grid gap-3 bg-muted p-3 sm:grid-cols-2">
-              {images.map((image, index) => (
-                <div key={image} className={`relative ${index === 0 ? 'h-72 sm:col-span-2 sm:h-[28rem]' : 'h-40'}`}>
-                  <Image src={image} alt={`${property.name} image ${index + 1}`} fill className="rounded-lg object-cover" priority={index === 0} />
-                </div>
-              ))}
-            </div>
-          )}
+          {primaryImage && <PropertyCarousel images={images} name={property.name} />}
           <div className="flex flex-col gap-8 p-6 sm:p-10">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
@@ -39,7 +31,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 <h1 className="text-3xl font-bold text-foreground sm:text-5xl">{property.name}</h1>
                 <p className="mt-3 flex items-center gap-2 text-muted-foreground"><MapPin data-icon="inline-start" />{property.location}</p>
               </div>
-              <p className="text-3xl font-bold text-primary">₹{(property.price / 10000000).toFixed(2)} Cr</p>
+              <div className="flex flex-col items-start gap-3 sm:items-end"><p className="text-3xl font-bold text-primary">{formatIndianPrice(property.price)}</p><a href={`https://wa.me/?text=${encodeURIComponent(`Hello, I am interested in ${property.name} (${property.code || 'Property'}). Location: ${property.location}. Price: ${formatIndianPrice(property.price)}. Details: /properties/${property.id}`)}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-primary-foreground"><MessageCircle data-icon="inline-start" /> WhatsApp</a></div>
             </div>
             <div className="grid gap-4 border-y border-border py-6 sm:grid-cols-2">
               <p className="flex items-center gap-3 text-muted-foreground"><Home data-icon="inline-start" />{property.type}</p>
