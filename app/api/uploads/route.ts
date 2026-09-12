@@ -32,16 +32,29 @@ export async function GET(request: Request) {
     const result = await getR2Client().send(new GetObjectCommand({ Bucket: bucket, Key: key }))
     if (!result.Body) return new NextResponse('Not found', { status: 404 })
 
+    const extension = key.split('.').pop()?.toLowerCase()
+    const contentTypeByExtension: Record<string, string> = {
+      jpg: 'image/jpeg',
+      jpeg: 'image/jpeg',
+      png: 'image/png',
+      webp: 'image/webp',
+      avif: 'image/avif',
+    }
+
     return new NextResponse(result.Body.transformToWebStream(), {
+      status: 200,
       headers: {
-        'Content-Type': result.ContentType ?? 'image/jpeg',
+        'Content-Type': result.ContentType || contentTypeByExtension[extension ?? ''] || 'application/octet-stream',
+        'Content-Length': result.ContentLength?.toString() ?? '',
+        'Content-Disposition': 'inline',
         'Cache-Control': result.CacheControl ?? 'public, max-age=31536000, immutable',
+        'X-Content-Type-Options': 'nosniff',
         ETag: result.ETag ?? '',
       },
     })
   } catch (error) {
     console.error('[v0] R2 image delivery failed:', error)
-    return new NextResponse('Image not found', { status: 404 })
+    return NextResponse.json({ error: 'Image not found' }, { status: 404 })
   }
 }
 
