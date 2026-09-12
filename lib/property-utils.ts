@@ -1,5 +1,10 @@
 function normalizeImageUrl(value: string) {
   const url = value.trim()
+  if (!url) return null
+
+  // Uploaded R2 images are stored as app-proxied relative URLs.
+  // Keep them relative so they are not dropped before rendering.
+  if (url.startsWith('/api/uploads?key=')) return url
   if (!url.startsWith('https://')) return null
 
   try {
