@@ -9,10 +9,16 @@ function normalizeImageUrl(value: string) {
     if (parsed.hostname === 'drive.google.com' && fileId) {
       return `https://drive.google.com/uc?export=view&id=${encodeURIComponent(fileId)}`
     }
+
+    const r2Key = decodeURIComponent(parsed.pathname).replace(/^\//, '')
+    if (r2Key.startsWith('properties/')) {
+      return `/api/uploads?key=${encodeURIComponent(r2Key)}`
+    }
   } catch {
     return null
   }
 
+  if (url.startsWith('/api/uploads?key=')) return url
   return url
 }
 

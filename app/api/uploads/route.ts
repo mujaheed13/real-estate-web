@@ -1,4 +1,4 @@
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { randomUUID } from 'node:crypto'
 import { NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
@@ -21,6 +21,30 @@ function getR2Client() {
   })
 }
 
+export async function GET(request: Request) {
+  try {
+    const key = new URL(request.url).searchParams.get('key')
+    if (!key || !key.startsWith('properties/')) return NextResponse.json({ error: 'Invalid image key' }, { status: 400 })
+
+    const bucket = process.env.R2_BUCKET_NAME
+    if (!bucket) return NextResponse.json({ error: 'Cloudflare R2 bucket is not configured' }, { status: 500 })
+
+    const result = await getR2Client().send(new GetObjectCommand({ Bucket: bucket, Key: key }))
+    if (!result.Body) return new NextResponse('Not found', { status: 404 })
+
+    return new NextResponse(result.Body.transformToWebStream(), {
+      headers: {
+        'Content-Type': result.ContentType ?? 'image/jpeg',
+        'Cache-Control': result.CacheControl ?? 'public, max-age=31536000, immutable',
+        ETag: result.ETag ?? '',
+      },
+    })
+  } catch (error) {
+    console.error('[v0] R2 image delivery failed:', error)
+    return new NextResponse('Image not found', { status: 404 })
+  }
+}
+
 export async function POST(request: Request) {
   const session = await auth.api.getSession({ headers: await headers() })
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -32,8 +56,7 @@ export async function POST(request: Request) {
     if (files.length > 12) return NextResponse.json({ error: 'You can upload up to 12 images at once' }, { status: 400 })
 
     const bucket = process.env.R2_BUCKET_NAME
-    const publicUrl = process.env.R2_PUBLIC_URL?.replace(/\/$/, '')
-    if (!bucket || !publicUrl) throw new Error('Cloudflare R2 bucket or public URL is not configured')
+    if (!bucket) throw new Error('Cloudflare R2 bucket is not configured')
 
     const client = getR2Client()
     const urls: string[] = []
@@ -49,7 +72,7 @@ export async function POST(request: Request) {
         ContentType: file.type,
         CacheControl: 'public, max-age=31536000, immutable',
       }))
-      urls.push(`${publicUrl}/${key}`)
+      urls.push(`/api/uploads?key=${encodeURIComponent(key)}`)
     }
     return NextResponse.json({ urls })
   } catch (error) {
