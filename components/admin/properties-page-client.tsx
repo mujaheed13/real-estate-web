@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { PropertyForm } from '@/components/admin/property-form'
 import { PropertiesTable } from '@/components/admin/properties-table'
 import { Plus } from 'lucide-react'
+import { PropertyImportExport } from '@/components/admin/property-import-export'
 
 interface PropertyData {
   id: number
@@ -38,7 +39,8 @@ export function PropertiesPageClient({ properties: initialProperties }: Properti
 
   return (
     <>
-      <div className="flex justify-end mb-6">
+      <div className="mb-6 flex flex-wrap justify-end gap-3">
+        <PropertyImportExport />
         <button
           onClick={() => {
             setEditingProperty(null)

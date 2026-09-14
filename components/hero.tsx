@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ChevronDown } from 'lucide-react'
+import Link from 'next/link'
 
 export function Hero() {
   const images = ['/hero-villa.png', '/hero-apartment.png', '/hero-plot.png']
@@ -59,9 +60,9 @@ export function Hero() {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-          <button className="button-primary bg-white text-secondary hover:bg-gray-100">
+          <Link href="/properties" className="button-primary bg-white text-secondary hover:bg-gray-100">
             View Properties
-          </button>
+          </Link>
           <button className="button-secondary border-2 border-white text-white hover:bg-white hover:text-secondary">
             Contact Us
           </button>
