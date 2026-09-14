@@ -7,6 +7,7 @@ import { and, desc, eq } from 'drizzle-orm'
 import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import * as XLSX from 'xlsx'
+import { getPropertyImages } from '@/lib/property-utils'
 
 function getDb() { if (!db) throw new Error('DATABASE_URL is required'); return db }
 const PROPERTY_STATUSES = ['available', 'sold', 'rented', 'under-construction'] as const
@@ -18,7 +19,7 @@ async function getUserId() {
 }
 
 function normalizeImages(value?: string) {
-  const urls = (value ?? '').split(/[\n,]+/).map((url) => url.trim()).filter(Boolean)
+  const urls = getPropertyImages(value)
   if (urls.some((url) => !url.startsWith('https://'))) throw new Error('All image URLs must use HTTPS')
   return urls.join('\n') || null
 }

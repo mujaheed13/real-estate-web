@@ -1,10 +1,24 @@
+function getPublicR2Url(key: string) {
+  const configuredUrl = process.env.NEXT_PUBLIC_R2_PUBLIC_URL?.trim().replace(/\/$/, '')
+  if (!configuredUrl) return `/api/uploads?key=${encodeURIComponent(key)}`
+  const baseUrl = /^https?:\/\//i.test(configuredUrl) ? configuredUrl : `https://${configuredUrl}`
+  return `${baseUrl}/${key.split('/').map(encodeURIComponent).join('/')}`
+}
+
 function normalizeImageUrl(value: string) {
   const url = value.trim()
   if (!url) return null
 
-  // Uploaded R2 images are stored as app-proxied relative URLs.
-  // Keep them relative so they are not dropped before rendering.
-  if (url.startsWith('/api/uploads?key=')) return url
+  // Stored uploads may be the proxy URL or a full R2 URL. Resolve both
+  // through the configured public R2 hostname so existing records work too.
+  if (url.startsWith('/api/uploads?key=')) {
+    try {
+      const key = new URL(url, 'https://property-listing.local').searchParams.get('key')
+      return key?.startsWith('properties/') ? getPublicR2Url(key) : null
+    } catch {
+      return url
+    }
+  }
   if (!url.startsWith('https://')) return null
 
   try {
@@ -16,14 +30,11 @@ function normalizeImageUrl(value: string) {
     }
 
     const r2Key = decodeURIComponent(parsed.pathname).replace(/^\//, '')
-    if (r2Key.startsWith('properties/')) {
-      return `/api/uploads?key=${encodeURIComponent(r2Key)}`
-    }
+    if (r2Key.startsWith('properties/')) return getPublicR2Url(r2Key)
   } catch {
     return null
   }
 
-  if (url.startsWith('/api/uploads?key=')) return url
   return url
 }
 
