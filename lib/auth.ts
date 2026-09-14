@@ -2,13 +2,14 @@ import { betterAuth } from 'better-auth'
 import { Pool } from 'pg'
 
 function getAuth() {
-  const url =
-    process.env.DATABASE_URL ??
-    process.env.NEON_POSTGRES_URL ??
-    process.env.NEON_DATABASE_URL ??
-    process.env.NEON_POSTGRES_PRISMA_URL ??
-    process.env.NEON_POSTGRES_URL_NON_POOLING
-  if (!url) throw new Error('A Neon database connection string is required')
+  const url = [
+    process.env.DATABASE_URL,
+    process.env.NEON_POSTGRES_URL,
+    process.env.NEON_DATABASE_URL,
+    process.env.NEON_POSTGRES_PRISMA_URL,
+    process.env.NEON_POSTGRES_URL_NON_POOLING,
+  ].find((value) => Boolean(value && (value.startsWith('postgres://') || value.startsWith('postgresql://'))))
+  if (!url) throw new Error('A valid Neon database connection string is required')
 
   const pool = new Pool({ connectionString: url })
 
