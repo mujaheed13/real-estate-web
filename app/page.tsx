@@ -16,6 +16,8 @@ import { Contact } from '@/components/contact'
 import { FloatingButtons } from '@/components/floating-buttons'
 import { Footer } from '@/components/footer'
 
+export const dynamic = 'force-dynamic'
+
 export default function Home() {
   return (
     <main className="overflow-hidden">
